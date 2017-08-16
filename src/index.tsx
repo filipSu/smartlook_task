@@ -11,7 +11,6 @@ import {
     fullWhite,
 } from 'material-ui/styles/colors';
 import {fade} from 'material-ui/utils/colorManipulator';
-import spacing from 'material-ui/styles/spacing';
 
 import App from "./components/App";
 
@@ -19,8 +18,8 @@ const rootEl = document.getElementById("root");
 
 const muiTheme = getMuiTheme({
     palette: {
-        primary1Color: '#7953d2',
-        accent1Color: '#FF79B0',
+        primary1Color: '#FF79B0',
+        accent1Color: '#7953d2'
     },
 });
 

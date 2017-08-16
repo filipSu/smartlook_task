@@ -33,10 +33,12 @@ main.content-wrapper {
   .content {
     background: $content_background;
     min-height: $content_min_height;
+    max-height: $content_max_height;
     min-width: $content_min_width;
     max-width: $content_max_width;
     margin-top: $content_top_offset;
     padding: 0;
+    overflow: scroll;
   }
 }
 
@@ -52,6 +54,9 @@ div.post-list-item-content {
     overflow: hidden;
     text-overflow: ellipsis;
   }
+  p:first-letter {
+    text-transform:capitalize;
+  }
   p.posted-by {
     margin: 4px 0 0;
     line-height: 16px;
@@ -62,3 +67,25 @@ div.post-list-item-content {
     }
   }
 }
+
+//Scrollbar
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-button {
+  width: 6px;
+  height:5px;
+}
+::-webkit-scrollbar-track {
+  /*background:#eee;
+  box-shadow: 0px 0px 3px #dfdfdf inset;
+  border-radius:10px;*/
+}
+::-webkit-scrollbar-thumb {
+  background: #b9b9b9;
+  border-radius:10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #969696;
+}
+//END Scrollbar
