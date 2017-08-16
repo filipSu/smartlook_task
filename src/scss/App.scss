@@ -1,0 +1,64 @@
+@import "settings";
+@import "mixins";
+@import "flexboxgrid_settings";
+
+html {
+  height: 100%;
+  font-family: 'Roboto', helvetica, sans-serif;
+}
+
+body {
+  min-height: 100%;
+  margin: 0;
+  /*@include linearHorizontalGradient($primary_purple, $primary_yellow, 50%, 50%);*/
+}
+
+.full-height {
+  min-height: 100%;
+}
+
+.no-margin {
+  margin: 0;
+}
+
+.app {
+  background-attachment: fixed;
+  height: 100vh;
+}
+
+main.content-wrapper {
+  color: black;
+  height: 100vh;
+  @include leftRightDiagonalGradient($primary_purple, $primary_pink, 50%, 50%);
+  .content {
+    background: $content_background;
+    min-height: $content_min_height;
+    min-width: $content_min_width;
+    max-width: $content_max_width;
+    margin-top: $content_top_offset;
+    padding: 0;
+  }
+}
+
+div.post-list-item-content {
+  display: -webkit-box;
+  -webkit-box-clamp: 2;
+  -webkit-box-orient: vertical;
+  p {
+    font-size: 14px;
+    line-height: 18px;
+    height: 18px;
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  p.posted-by {
+    margin: 4px 0 0;
+    line-height: 16px;
+    height: 16px;
+    > span {
+      font-weight: 500;
+      color: $secondary_purple;
+    }
+  }
+}
