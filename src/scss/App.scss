@@ -29,21 +29,25 @@ body {
 main.content-wrapper {
   color: black;
   height: 100vh;
+  padding-top: $content_top_offset;
   @include leftRightDiagonalGradient($primary_purple, $primary_pink, 50%, 50%);
   .content {
-    background: $content_background;
     min-height: $content_min_height;
     max-height: $content_max_height;
     min-width: $content_min_width;
     max-width: $content_max_width;
-    margin-top: $content_top_offset;
     padding: 0;
-    overflow: scroll;
+    overflow: auto;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
   }
 }
 
 div.posts {
   overflow: scroll;
+  background: $content_background;
+  border-radius: 2px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  min-height: $posts_min_height;
 }
 
 div.post-list-item-content {
@@ -68,6 +72,45 @@ div.post-list-item-content {
     > span {
       font-weight: 500;
       color: $secondary_purple;
+    }
+  }
+}
+
+div.post-detail {
+  padding: 24px 0 0;
+  border-radius: 2px;
+
+}
+
+div.post-detail-content {
+  padding: 16px 16px 0;
+  > p:first-letter {
+    text-transform:capitalize;
+  }
+  p.post-title {
+    margin: 0;
+    font-size: $post_title_font_size;
+    line-height: $post_title_font_size;
+    font-weight: 500;
+  }
+}
+
+div.post-comments-wrapper {
+  background: $post_comments_background;
+  padding: 0 16px;
+}
+
+div.comments-list-item {
+  p.comment-primary-text {
+    margin: 0;
+    font-size: 14px;
+  }
+  p.comment-secondary-text span {
+    font-weight: 500;
+  }
+  &:hover {
+    p.comment-secondary-text span {
+      color: $primary_pink;
     }
   }
 }

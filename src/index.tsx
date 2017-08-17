@@ -2,8 +2,9 @@ import * as React from "react";
 import {render} from "react-dom";
 import { BrowserRouter, HashRouter } from 'react-router-dom';
 import {AppContainer} from "react-hot-loader";
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import Theme from "./misc/Theme";
+
 import {
     deepPurple800,
     grey600,
@@ -16,18 +17,11 @@ import App from "./components/App";
 
 const rootEl = document.getElementById("root");
 
-const muiTheme = getMuiTheme({
-    palette: {
-        primary1Color: '#FF79B0',
-        accent1Color: '#7953d2'
-    },
-});
-
 
 render(
     <AppContainer>
         <HashRouter>
-            <MuiThemeProvider muiTheme={muiTheme}>
+            <MuiThemeProvider muiTheme={Theme}>
                 <App/>
             </MuiThemeProvider>
         </HashRouter>
@@ -45,7 +39,7 @@ if (module.hot) {
         render(
             <AppContainer>
                 <HashRouter>
-                    <MuiThemeProvider muiTheme={muiTheme}>
+                    <MuiThemeProvider muiTheme={Theme}>
                         <NewApp/>
                     </MuiThemeProvider>
                 </HashRouter>

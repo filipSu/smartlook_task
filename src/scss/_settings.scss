@@ -14,14 +14,21 @@ $posts_list_title: #000;
 $posts_list_subtitle: #8c8c8c;
 $posts_list_name: $secondary_purple;
 
+$post_comments_background: #ECECEC;
+
 /* END COLORS */
 
 /* DIMENSIONS */
 
 $content_max_width: 800px;
-$content_min_width: 300px;
-$content_min_height: calc(100% - 10em);
-$content_max_height: calc(100% - 5em);
+$content_min_width: 350px;
+$content_min_height: 100px;
+/*$content_min_height: calc(100% - 10em);*/
+$content_max_height: calc(100%);
+$content_height: calc(100% - 5em);
 $content_top_offset: 5em;
+
+$post_title_font_size: 32px;
+$posts_min_height: 400px;
 
 /* END DIMENSIONS */

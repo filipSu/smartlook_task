@@ -1,18 +1,17 @@
 import dispatcher from "../AppDispatcher";
 import PostsActionsID = require('../constants/PostsActionsID');
+import PostAPI from "../apis/PostsAPI";
 
-export function createPost(title: string, body: string, userId: number) {
+export function reloadPosts() {
     dispatcher.dispatch({
-        type: PostsActionsID.POST_CREATE,
-        title: title,
-        body: body,
-        userId: userId
+        type: PostsActionsID.POST_FETCH_ALL
     });
+    PostAPI.getAll();
 }
 
-export function deletePost(id: number) {
+export function receivePosts(response) {
     dispatcher.dispatch({
-        type: PostsActionsID.POST_DELETE,
-        id: id
+        type: PostsActionsID.POST_FETCH_ALL_RESPONSE,
+        posts: response
     });
 }

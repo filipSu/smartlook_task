@@ -6,10 +6,11 @@ const sample_posts = require('../assets/test_posts.json');
 
 class PostsStore extends EventEmitter {
     private _posts;
+    static CHANGE_EVENT = "change";
 
     constructor() {
         super();
-        this._posts = sample_posts;
+        this._posts = [];
     }
 
     getAll() {
@@ -17,16 +18,21 @@ class PostsStore extends EventEmitter {
     }
 
     get(id: number) {
-        return this._posts.find((post) => post.id === id);
+        if (!this._posts) {
+            this._posts = [];
+        }
+        return this._posts.find((post) => post.id === +id);
+    }
+
+    getByUserID(userId: number) {
+        return this._posts.filter((post) => post.userId === userId);
     }
 
     handleActions(action: any) {
         switch (action.type) {
-            case PostsActionsID.POST_CREATE:
-                this.createPost(action.title, action.body, action.userId);
-                break;
-            case PostsActionsID.POST_DELETE:
-                this.deletePost(action.id);
+            case PostsActionsID.POST_FETCH_ALL_RESPONSE:
+                this._posts = action.posts;
+                this.emit("change");
                 break;
         }
     }

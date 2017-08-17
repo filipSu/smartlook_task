@@ -4,11 +4,14 @@ import Divider from "material-ui/Divider";
 import Subheader from "material-ui/Subheader";
 import LinearProgress from "material-ui/LinearProgress";
 import PostsStore from "../stores/PostsStore";
-import UsersStore from "../stores/UsersStore";
+import * as PostsActions from "../actions/PostsActions";
 import PostsListItem from "./PostsListItem";
+import PostsAPI from "../apis/PostsAPI";
+import UsersAPI from "../apis/UsersAPI";
 
 export interface IPostsListState {
-    isLoadingContent: boolean;
+    isLoadingContent?: boolean;
+    postsItems?: any[];
     posts: any[];
 }
 export interface IPostsListProps {}
@@ -26,29 +29,32 @@ export default class PostsList extends React.Component<IPostsListProps, IPostsLi
     }
 
     componentWillMount() {
-        this.setState({
-            isLoadingContent: false,
-            posts: PostsStore.getAll()
-        });
+        PostsAPI.getAllSimple()
+            .then((data) => {
+                this.setState({posts: data, isLoadingContent: false})
+            })
+            .catch((error) => {
+                console.error(error);
+            });
     }
 
     private getPostItem(post: any) {
-        //get user's info
-        let user = UsersStore.get(post.userId);
         return (
             <PostsListItem
+                {...this.props}
                 id={post.id}
                 title={post.title}
+                userId={post.userId}
                 subtitle={PostsList.trimSubtitle(post.body)}
-                author={user !== undefined ? user.name : 'Unknown'}
             />
         );
     }
 
-    private getDivider(postsCount: number, current: number) {
-        //if given item is NOT last one, return divider element
-        if ((postsCount - 1) !== current) {
-            return (<Divider inset={true} />);
+    private getDivider(current: number) {
+        //if given item is first one, return divider element
+        // first one because array will be reversed
+        if (current !== 0) {
+            return (<Divider />);
         }else {
             return undefined;
         }
@@ -59,22 +65,22 @@ export default class PostsList extends React.Component<IPostsListProps, IPostsLi
     }
 
     render() {
-        let loadingProgressBar = null;
+        let loadingProgressBar;
         let isLoadingContent = this.state.isLoadingContent;
         /* if content is loaded, show progress bar on the top of the posts list*/
         if (isLoadingContent) {
             loadingProgressBar = <LinearProgress secondary={true} mode="indeterminate" className="col-xs-12"/>;
         }
         /* define posts list items rendering */
-        let posts = this.state.posts;
-        let postsItems = posts.reverse().map((post,i) => [
+        let posts = this.state.posts || [];
+        let postsItems = posts.map((post,i) => [
             this.getPostItem(post), //render list item
-            this.getDivider(posts.length, i)
-        ]);
+            this.getDivider(i)
+        ]).reverse();
         return (
             <div className="row top-xs posts">
                 {loadingProgressBar}
-                <List className="col-xs-12 posts-list">
+                <List className="col-xs-12 posts-list top-xs">
                     <Subheader className="col-xs-12">Latest posts</Subheader>
                     {postsItems}
                 </List>

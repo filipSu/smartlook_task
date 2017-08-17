@@ -9,7 +9,7 @@ class UsersStore extends EventEmitter {
 
     constructor() {
         super();
-        this._users = sample_users;
+        this._users = [];
     }
 
     getAll() {
@@ -17,12 +17,18 @@ class UsersStore extends EventEmitter {
     }
 
     get(id: number) {
+        if (!this._users) {
+            this._users = [];
+        }
         return this._users.find((user) => user.id === id);
     }
 
     handleActions(action: any) {
         switch (action.type) {
-
+            case UsersActionsID.USER_FETCH_ALL_RESPONSE:
+                this._users = action.users;
+                this.emit("change");
+                break;
         }
     }
 }

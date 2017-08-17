@@ -5,17 +5,17 @@ import PostDetail from "./PostDetail";
 
 require("!style-loader!css-loader!sass-loader!../scss/App.scss");
 
-export interface AppProps {
+export interface IAppState {
+}
+export interface IAppProps {
 }
 
-export default class App extends React.Component<AppProps, undefined> {
-
+export default class App extends React.Component<IAppProps, IAppState> {
     render() {
-        console.log(this.context.muiTheme);
         return (
             <div className="app container">
                 <main className="row content-wrapper">
-                    <section className="col-xs-12 center row top-xs">
+                    <section className="col-xs-12 center row middle-xs">
                         <div className="col-xs-10 center content">
                             <switch>
                                 <Route exact path="/" component={PostsList} />
