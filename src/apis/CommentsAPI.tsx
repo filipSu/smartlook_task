@@ -1,5 +1,4 @@
 import Axios from "axios";
-
 export default class CommentsAPI {
 
     static getByPostID(id: number) {

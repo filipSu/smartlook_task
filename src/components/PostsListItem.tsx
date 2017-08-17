@@ -16,10 +16,6 @@ export interface IPostsListItemProps {
 
 export default class PostsListItem extends React.Component<IPostsListItemProps, IPostsListItemState> {
 
-    contextTypes = {
-        router: React.PropTypes.object
-    };
-
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);

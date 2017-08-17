@@ -1,9 +1,6 @@
 import * as React from "react";
 import FlatButton from 'material-ui/FlatButton';
 import ArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
-import PostsStore from "../stores/PostsStore";
-import CommentsStore from "../stores/CommentsStore";
-import UsersStore from "../stores/UsersStore";
 import {List, ListItem} from "material-ui/List";
 import Avatar from 'material-ui/Avatar';
 import Person from 'material-ui/svg-icons/social/person';

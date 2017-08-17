@@ -3,11 +3,8 @@ import {List, ListItem} from "material-ui/List";
 import Divider from "material-ui/Divider";
 import Subheader from "material-ui/Subheader";
 import LinearProgress from "material-ui/LinearProgress";
-import PostsStore from "../stores/PostsStore";
-import * as PostsActions from "../actions/PostsActions";
 import PostsListItem from "./PostsListItem";
 import PostsAPI from "../apis/PostsAPI";
-import UsersAPI from "../apis/UsersAPI";
 
 export interface IPostsListState {
     isLoadingContent?: boolean;
@@ -29,7 +26,7 @@ export default class PostsList extends React.Component<IPostsListProps, IPostsLi
     }
 
     componentWillMount() {
-        PostsAPI.getAllSimple()
+        PostsAPI.getAll()
             .then((data) => {
                 this.setState({posts: data, isLoadingContent: false})
             })

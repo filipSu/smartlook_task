@@ -1,7 +1,5 @@
 import * as React from "react";
 import {ListItem} from "material-ui/List";
-import { BrowserRouter as Router } from 'react-router-dom'
-import KeyboardArrowDown from "material-ui/svg-icons/hardware/keyboard-arrow-down";
 
 export interface ICommentsListItemState {}
 export interface ICommentsListItemProps {
