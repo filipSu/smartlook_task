@@ -2,21 +2,20 @@ import * as React from "react";
 import {List, ListItem} from "material-ui/List";
 import Divider from "material-ui/Divider";
 import Subheader from "material-ui/Subheader";
-import Person from "material-ui/svg-icons/social/person";
-import KeyboardArrowDown from "material-ui/svg-icons/hardware/keyboard-arrow-down";
 import LinearProgress from "material-ui/LinearProgress";
-import Avatar from "material-ui/Avatar";
-import PostsAPI from "../services/PostsAPI";
-import Post from "../models/Post";
-import Utilities from "../misc/Utilities"
+import PostsStore from "../stores/PostsStore";
+import UsersStore from "../stores/UsersStore";
+import PostsListItem from "./PostsListItem";
 
 export interface IPostsListState {
     isLoadingContent: boolean;
-    posts: Post[]; //TODO change to POST object
+    posts: any[];
 }
 export interface IPostsListProps {}
 
 export default class PostsList extends React.Component<IPostsListProps, IPostsListState> {
+
+    private static SUBTITLE_CHAR_COUNT = 120;
 
     constructor(props) {
         super(props);
@@ -29,37 +28,34 @@ export default class PostsList extends React.Component<IPostsListProps, IPostsLi
     componentWillMount() {
         this.setState({
             isLoadingContent: false,
-            posts: PostsAPI.getPosts()
-        })
+            posts: PostsStore.getAll()
+        });
     }
 
-    private getPostItem(post: Post) {
+    private getPostItem(post: any) {
+        //get user's info
+        let user = UsersStore.get(post.userId);
         return (
-            <ListItem
-                key={post.id}
-                className="post-list-item"
-                primaryText={Utilities.capitalizeFirstLetter(post.title)}
-                secondaryText={
-                    <div className="post-list-item-content">
-                        <p>{post.body}</p>
-                        <p className="posted-by">
-                            post by <span>{post.userId}</span>
-                        </p>
-                    </div>
-                }
-                secondaryTextLines={2}
-                rightIcon={<KeyboardArrowDown className="middle"/>}
+            <PostsListItem
+                id={post.id}
+                title={post.title}
+                subtitle={PostsList.trimSubtitle(post.body)}
+                author={user !== undefined ? user.name : 'Unknown'}
             />
         );
     }
 
     private getDivider(postsCount: number, current: number) {
+        //if given item is NOT last one, return divider element
         if ((postsCount - 1) !== current) {
             return (<Divider inset={true} />);
-
         }else {
-            return null;
+            return undefined;
         }
+    }
+
+    private static trimSubtitle(body: string) {
+        return body.slice(0, PostsList.SUBTITLE_CHAR_COUNT);
     }
 
     render() {
@@ -71,7 +67,7 @@ export default class PostsList extends React.Component<IPostsListProps, IPostsLi
         }
         /* define posts list items rendering */
         let posts = this.state.posts;
-        let postsItems = posts.map((post,i) => [
+        let postsItems = posts.reverse().map((post,i) => [
             this.getPostItem(post), //render list item
             this.getDivider(posts.length, i)
         ]);

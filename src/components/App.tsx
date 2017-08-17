@@ -19,7 +19,7 @@ export default class App extends React.Component<AppProps, undefined> {
                         <div className="col-xs-10 center content">
                             <switch>
                                 <Route exact path="/" component={PostsList} />
-                                <Route path="/post" component={PostDetail} />
+                                <Route path="/post/:id" component={PostDetail} />
                             </switch>
                         </div>
                     </section>

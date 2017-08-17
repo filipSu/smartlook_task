@@ -1,0 +1,4 @@
+enum UsersActionsID {
+}
+
+export = UsersActionsID;

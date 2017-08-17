@@ -42,6 +42,10 @@ main.content-wrapper {
   }
 }
 
+div.posts {
+  overflow: scroll;
+}
+
 div.post-list-item-content {
   display: -webkit-box;
   -webkit-box-clamp: 2;
