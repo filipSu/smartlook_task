@@ -13,11 +13,6 @@ export default class CommentsList extends React.Component<ICommentsListProps, IC
 
     constructor(props) {
         super(props);
-        this.handleClick = this.handleClick.bind(this);
-    }
-
-    handleClick() {
-
     }
 
     getCommentItem(comment: any) {
@@ -42,7 +37,6 @@ export default class CommentsList extends React.Component<ICommentsListProps, IC
 
     render() {
         let comments = this.props.comments;
-        console.log(comments);
         let commentsItems;
         if (comments) {
             commentsItems = comments.map((comment,i) => [

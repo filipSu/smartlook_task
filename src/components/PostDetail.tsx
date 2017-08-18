@@ -17,7 +17,6 @@ import PostsAPI from "../apis/PostsAPI";
 import UsersAPI from "../apis/UsersAPI";
 import CommentsAPI from "../apis/CommentsAPI";
 import UserDetailDialog from "./UserDetailDialog";
-import Dialog from 'material-ui/Dialog';
 
 export interface IPostDetailState {
     isLoadingPost?: boolean;
@@ -117,6 +116,7 @@ export default class PostDetail extends React.Component<IPostDetailProps, IPostD
             title = post.title;
             body = post.body;
         }
+        //TODO separate into smaller components
         return (
                 <Card
                     expanded={this.state.commentsExpanded}

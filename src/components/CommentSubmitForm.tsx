@@ -40,9 +40,6 @@ export default class CommentSubmitForm extends React.Component<ICommentSubmitFor
     }
 
     handleSubmit() {
-
-        console.log("all ok");
-
     }
 
     render() {
