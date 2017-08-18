@@ -40,8 +40,9 @@ export default class PostDetail extends React.Component<IPostDetailProps, IPostD
         this.handleToggleComments = this.handleToggleComments.bind(this);
         this.handleUserDetailOpen = this.handleUserDetailOpen.bind(this);
         this.handleUserDetailClose = this.handleUserDetailClose.bind(this);
+        this.handleCommentSubmit = this.handleCommentSubmit.bind(this);
         this.state = {
-            commentsExpanded: false,
+            commentsExpanded: true,
             isLoadingPost: true,
             id: props.match.params.id,
             userDetailOpened: false
@@ -99,6 +100,18 @@ export default class PostDetail extends React.Component<IPostDetailProps, IPostD
 
     handleUserDetailClose() {
         this.setState({userDetailOpened: false});
+    }
+
+    handleCommentSubmit(comment: any) {
+        CommentsAPI.postComment(this.state.post.id, comment.name, comment.email, comment.body)
+            .then((data) => {
+                this.setState({
+                    comments: this.state.comments.concat(data)
+                });
+            })
+            .catch((error) => {
+                console.error(error);
+            });
     }
 
     private static capitalizeFirstLetter(string) {
@@ -183,7 +196,7 @@ export default class PostDetail extends React.Component<IPostDetailProps, IPostD
                     </div>
                     <Divider/>
                     <CardText expandable={true} className="col-xs-12 row" style={{paddingTop: 0}}>
-                        <CommentSubmitForm/>
+                        <CommentSubmitForm onSubmit={this.handleCommentSubmit} />
                     </CardText>
                     <Divider/>
                     <CardText expandable={true} className="col-xs-12 row post-comments-wrapper">

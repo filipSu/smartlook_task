@@ -1,3 +1,11 @@
+@mixin gradient-vertical($start-color: #555, $end-color: #333, $start-percent: 0%, $end-percent: 100%) {
+  background-image: -webkit-linear-gradient(top, $start-color $start-percent, $end-color $end-percent);  // Safari 5.1-6, Chrome 10+
+  background-image: -o-linear-gradient(top, $start-color $start-percent, $end-color $end-percent);  // Opera 12
+  background-image: linear-gradient(to bottom, $start-color $start-percent, $end-color $end-percent); // Standard, IE10, Firefox 16+, Opera 12.10+, Safari 7+, Chrome 26+
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{ie-hex-str($start-color)}', endColorstr='#{ie-hex-str($end-color)}', GradientType=0); // IE9 and down
+}
+
 @mixin linearVerticalGradient($top, $bottom, $start-percent: 0%, $end-percent: 100%){
   background: $top; /* Old browsers */
   background: -moz-linear-gradient(top,  $top $start-percent, $bottom $end-percent); /* FF3.6+ */
@@ -18,3 +26,15 @@
   background: linear-gradient(to right,  $top $start-percent,$bottom $end-percent); /* W3C */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#000000',GradientType=0 ); /* IE6-9 */
 }
+
+@mixin leftRightDiagonalGradient($left, $right, $start-percent: 0%, $end-percent: 100%){
+  background: $right; /* Old browsers */
+  background-size: contain;
+  background: -moz-linear-gradient(-45deg, $left $start-percent, $right $end-percent); /* FF3.6-15 */
+  background: -webkit-gradient(linear, left top, right bottom, color-stop($start-percent,$left), color-stop($end-percent,$right)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(-45deg, $left $start-percent, $right $end-percent); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(135deg,  $left $start-percent,$right $end-percent); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=$left, endColorstr=$right,GradientType=1 ); /* IE6-9 */
+}
+
+

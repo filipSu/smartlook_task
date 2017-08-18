@@ -7,7 +7,9 @@ export interface ICommentSubmitFormState {
     email?: string;
     body?: string;
 }
-export interface ICommentSubmitFormProps {}
+export interface ICommentSubmitFormProps {
+    onSubmit: any;
+}
 
 export default class CommentSubmitForm extends React.Component<ICommentSubmitFormProps, ICommentSubmitFormState> {
 
@@ -40,6 +42,11 @@ export default class CommentSubmitForm extends React.Component<ICommentSubmitFor
     }
 
     handleSubmit() {
+        this.props.onSubmit({
+            name: this.state.name,
+            email: this.state.email,
+            body: this.state.body
+        });
     }
 
     render() {
