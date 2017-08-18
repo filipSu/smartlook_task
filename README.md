@@ -28,4 +28,4 @@ Starts a web server hosting the app @ http://localhost:8080
 
 * webpack doesn't remove HMR(Hot Module Replacement) in production version
 * while loading posts, PostList isn't appealing. Should fix this mid-state
-
+* should make better use of MaterialUI theme
