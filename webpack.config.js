@@ -46,7 +46,7 @@ module.exports = {
             },
             {
                 test:    /\.scss$/,
-                loaders: ["style-loader", "css-loader?modules", "postcss-loader", "sass-loader"],
+                loaders: ["style-loader", "css-loader?modules", "postcss-loader", "sass-loader?sourceMap"],
                 include: /flexboxgrid/
             },
             {

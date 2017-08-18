@@ -5,6 +5,9 @@ import {AppContainer} from "react-hot-loader";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Theme from "./misc/Theme";
 
+const injectTapEventPlugin = require("react-tap-event-plugin");
+injectTapEventPlugin();
+
 import {
     deepPurple800,
     grey600,

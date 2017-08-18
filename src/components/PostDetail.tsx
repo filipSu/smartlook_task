@@ -16,6 +16,8 @@ import CommentSubmitForm from "./CommentSubmitForm";
 import PostsAPI from "../apis/PostsAPI";
 import UsersAPI from "../apis/UsersAPI";
 import CommentsAPI from "../apis/CommentsAPI";
+import UserDetailDialog from "./UserDetailDialog";
+import Dialog from 'material-ui/Dialog';
 
 export interface IPostDetailState {
     isLoadingPost?: boolean;
@@ -24,6 +26,7 @@ export interface IPostDetailState {
     user?: any;
     comments?: any[];
     id?: number;
+    userDetailOpened?: boolean;
 }
 export interface IPostDetailProps {
     history?: any;
@@ -36,11 +39,13 @@ export default class PostDetail extends React.Component<IPostDetailProps, IPostD
         super(props);
         this.handleBack = this.handleBack.bind(this);
         this.handleToggleComments = this.handleToggleComments.bind(this);
-        console.log(props);
+        this.handleUserDetailOpen = this.handleUserDetailOpen.bind(this);
+        this.handleUserDetailClose = this.handleUserDetailClose.bind(this);
         this.state = {
             commentsExpanded: false,
             isLoadingPost: true,
-            id: props.match.params.id
+            id: props.match.params.id,
+            userDetailOpened: false
         };
     }
 
@@ -89,6 +94,14 @@ export default class PostDetail extends React.Component<IPostDetailProps, IPostD
         this.props.history.push('/');
     }
 
+    handleUserDetailOpen() {
+        this.setState({userDetailOpened: true});
+    }
+
+    handleUserDetailClose() {
+        this.setState({userDetailOpened: false});
+    }
+
     private static capitalizeFirstLetter(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
@@ -97,6 +110,7 @@ export default class PostDetail extends React.Component<IPostDetailProps, IPostD
         let post = this.state.post;
         let user = this.state.user;
         let comments = this.state.comments;
+        let userDetailOpened = this.state.userDetailOpened;
 
         let title = 'Loading', body = '';
         if (post) {
@@ -127,13 +141,17 @@ export default class PostDetail extends React.Component<IPostDetailProps, IPostD
                     <div className="col-xs-12 row middle-xs">
                         <div className="col-xs-12 start-xs col-sm-6 middle-xs">
                             <CardHeader
-                                style={{paddingLeft: 8}}
+                                style={{paddingLeft: 8,cursor: 'pointer'}}
                                 avatar={<Avatar icon={<Person />} />}
                                 title={user ? user.name : 'John Snow'}
-
+                                onClick={this.handleUserDetailOpen}
                                 titleStyle={{color: Theme.rawTheme.palette.accent1Color}}
                                 subtitle={user ? user.email : 'john.snow@example.com'}
                             />
+                            <UserDetailDialog
+                                user={user}
+                                opened={userDetailOpened}
+                                onClose={this.handleUserDetailClose}/>
                         </div>
                         <div className="col-xs-12 start-xs col-sm-6 end-sm" style={{paddingLeft: '0'}}>
                             <CardActions>
