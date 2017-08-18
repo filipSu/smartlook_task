@@ -17,6 +17,7 @@ import PostsAPI from "../apis/PostsAPI";
 import UsersAPI from "../apis/UsersAPI";
 import CommentsAPI from "../apis/CommentsAPI";
 import UserDetailDialog from "./UserDetailDialog";
+import Snackbar from 'material-ui/Snackbar';
 
 export interface IPostDetailState {
     isLoadingPost?: boolean;
@@ -26,6 +27,8 @@ export interface IPostDetailState {
     comments?: any[];
     id?: number;
     userDetailOpened?: boolean;
+    snackBarOpen?: boolean;
+    snackBarMessage?: string;
 }
 export interface IPostDetailProps {
     history?: any;
@@ -35,6 +38,9 @@ export interface IPostDetailProps {
  * Creates components representing detailed information about post specified in by ID in route(URL)
  * */
 export default class PostDetail extends React.Component<IPostDetailProps, IPostDetailState> {
+    /* error shown when server API call is not successful */
+    private static LOAD_ERROR_MESSAGE = "Could not load data. Try refreshing the page";
+    private static POST_ERROR_MESSAGE = "Could not post comment. Try later";
 
     constructor(props) {
         super(props);
@@ -44,12 +50,15 @@ export default class PostDetail extends React.Component<IPostDetailProps, IPostD
         this.handleUserDetailOpen = this.handleUserDetailOpen.bind(this);
         this.handleUserDetailClose = this.handleUserDetailClose.bind(this);
         this.handleCommentSubmit = this.handleCommentSubmit.bind(this);
+        this.handleSnackBarClose = this.handleSnackBarClose.bind(this);
         /* set default state */
         this.state = {
             commentsExpanded: false,
             isLoadingPost: true,
             id: props.match.params.id,
-            userDetailOpened: false
+            userDetailOpened: false,
+            snackBarOpen: false,
+            snackBarMessage: ''
         };
     }
     /**
@@ -66,7 +75,7 @@ export default class PostDetail extends React.Component<IPostDetailProps, IPostD
                 this.loadComments(data.id);
             })
             .catch((error) => {
-                console.error(error);
+                this.showLoadError(PostDetail.LOAD_ERROR_MESSAGE);
             });
     }
     /**
@@ -78,7 +87,7 @@ export default class PostDetail extends React.Component<IPostDetailProps, IPostD
                 this.setState({user: data});
             })
             .catch((error) => {
-                console.error(error);
+                this.showLoadError(PostDetail.LOAD_ERROR_MESSAGE);
             });
     }
     /**
@@ -93,8 +102,17 @@ export default class PostDetail extends React.Component<IPostDetailProps, IPostD
                 });
             })
             .catch((error) => {
-                console.error(error);
+                this.showLoadError(PostDetail.LOAD_ERROR_MESSAGE);
             });
+    }
+    /**
+     * Opens MaterialUI SnackBar and shows PostDetail.LOAD_ERROR_MESSAGE message
+     * */
+    private showLoadError(message: string) {
+        this.setState({
+            snackBarOpen: true,
+            snackBarMessage: message
+        });
     }
     /**
      * Shows/hides comments according to state variable
@@ -131,8 +149,17 @@ export default class PostDetail extends React.Component<IPostDetailProps, IPostD
                 });
             })
             .catch((error) => {
-                console.error(error);
+                this.showLoadError(PostDetail.POST_ERROR_MESSAGE);
             });
+    }
+    /**
+     * Closes MaterialUI SnackBar end resets it's message
+     * */
+    handleSnackBarClose() {
+        this.setState({
+            snackBarOpen: false,
+            snackBarMessage: ''
+        })
     }
     /**
      * Capitalizes first letter of given string
@@ -146,6 +173,8 @@ export default class PostDetail extends React.Component<IPostDetailProps, IPostD
         let user = this.state.user;
         let comments = this.state.comments;
         let userDetailOpened = this.state.userDetailOpened;
+        let snackBarOpen = this.state.snackBarOpen;
+        let snackBarMessage = this.state.snackBarMessage;
 
         let title = 'Loading', body = '';
         /* if post exist, specify title and body */
@@ -226,6 +255,12 @@ export default class PostDetail extends React.Component<IPostDetailProps, IPostD
                     <CardText expandable={true} className="col-xs-12 row post-comments-wrapper">
                         <CommentsList comments={comments}/>
                     </CardText>
+                    <Snackbar
+                        open={snackBarOpen}
+                        message={snackBarMessage}
+                        autoHideDuration={4000}
+                        onRequestClose={this.handleSnackBarClose}
+                    />
                 </Card>
         );
     }

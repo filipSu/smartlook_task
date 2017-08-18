@@ -5,11 +5,14 @@ import Subheader from "material-ui/Subheader";
 import LinearProgress from "material-ui/LinearProgress";
 import PostsListItem from "./PostsListItem";
 import PostsAPI from "../apis/PostsAPI";
+import Snackbar from 'material-ui/Snackbar';
 
 export interface IPostsListState {
     isLoadingContent?: boolean;
     postsItems?: any[];
     posts: any[];
+    snackBarOpen?: boolean;
+    snackBarMessage?: string;
 }
 export interface IPostsListProps {}
 
@@ -19,12 +22,19 @@ export interface IPostsListProps {}
 export default class PostsList extends React.Component<IPostsListProps, IPostsListState> {
     /* subtitle is trimmed from post body to this length*/
     private static SUBTITLE_CHAR_COUNT = 120;
+    /* error shown when server API call is not successful */
+    private static LOAD_ERROR_MESSAGE = "Could not load data. Try refreshing the page";
 
     constructor(props) {
         super(props);
+        /* assign handlers */
+        this.handleSnackBarClose = this.handleSnackBarClose.bind(this);
+        /* set default state */
         this.state = {
             isLoadingContent: true,
-            posts: []
+            posts: [],
+            snackBarOpen: false,
+            snackBarMessage: ''
         };
     }
     /**
@@ -36,8 +46,17 @@ export default class PostsList extends React.Component<IPostsListProps, IPostsLi
                 this.setState({posts: data, isLoadingContent: false})
             })
             .catch((error) => {
-                console.error(error);
+                this.showLoadError(PostsList.LOAD_ERROR_MESSAGE);
             });
+    }
+    /**
+     * Closes MaterialUI SnackBar end resets it's message
+     * */
+    handleSnackBarClose() {
+        this.setState({
+            snackBarOpen: false,
+            snackBarMessage: ''
+        })
     }
     /**
      * Creates new list item from given post information
@@ -74,8 +93,19 @@ export default class PostsList extends React.Component<IPostsListProps, IPostsLi
     private static trimSubtitle(body: string) {
         return body.slice(0, PostsList.SUBTITLE_CHAR_COUNT);
     }
+    /**
+     * Opens MaterialUI SnackBar and shows PostsList.LOAD_ERROR_MESSAGE message
+     * */
+    private showLoadError(message: string) {
+        this.setState({
+            snackBarOpen: true,
+            snackBarMessage: message
+        });
+    }
 
     render() {
+        let snackBarOpen = this.state.snackBarOpen;
+        let snackBarMessage = this.state.snackBarMessage;
         let loadingProgressBar;
         let isLoadingContent = this.state.isLoadingContent;
         /* if content is loaded, show progress bar on the top of the posts list*/
@@ -89,13 +119,20 @@ export default class PostsList extends React.Component<IPostsListProps, IPostsLi
             this.getPostItem(post), //render list item
             this.getDivider(i)
         ]).reverse();
+
         return (
             <div className="row top-xs posts">
                 {loadingProgressBar}
-                <List className="col-xs-12 posts-list top-xs">
+                <List className="col-xs-12 row posts-list top-xs">
                     <Subheader className="col-xs-12">Latest posts</Subheader>
                     {postsItems}
                 </List>
+                <Snackbar
+                    open={snackBarOpen}
+                    message={snackBarMessage}
+                    autoHideDuration={4000}
+                    onRequestClose={this.handleSnackBarClose}
+                />
             </div>
         );
     }
