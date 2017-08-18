@@ -1,5 +1,5 @@
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-
+/* set default application theme*/
 const muiTheme = getMuiTheme({
     palette: {
         primary1Color: '#FF79B0',

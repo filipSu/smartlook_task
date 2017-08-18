@@ -4,20 +4,12 @@ import { BrowserRouter, HashRouter } from 'react-router-dom';
 import {AppContainer} from "react-hot-loader";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Theme from "./misc/Theme";
-
+import {fade} from 'material-ui/utils/colorManipulator';
+import App from "./components/App";
+/* MaterialUI requires tapEventPlugin injection*/
 const injectTapEventPlugin = require("react-tap-event-plugin");
 injectTapEventPlugin();
-
-import {
-    deepPurple800,
-    grey600,
-    pinkA100, pinkA200, pinkA400,
-    fullWhite,
-} from 'material-ui/styles/colors';
-import {fade} from 'material-ui/utils/colorManipulator';
-
-import App from "./components/App";
-
+/* set root element*/
 const rootEl = document.getElementById("root");
 
 

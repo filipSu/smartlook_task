@@ -2,14 +2,15 @@ import * as React from "react";
 import { Switch, Route, Link } from 'react-router-dom';
 import PostsList from "./PostsList";
 import PostDetail from "./PostDetail";
-
+/* inject main style */
 require("!style-loader!css-loader!sass-loader!../scss/App.scss");
 
-export interface IAppState {
-}
-export interface IAppProps {
-}
+export interface IAppState {}
+export interface IAppProps {}
 
+/**
+ * Main application component. It includes default routing
+ * */
 export default class App extends React.Component<IAppProps, IAppState> {
     render() {
         return (

@@ -10,37 +10,49 @@ export interface ICommentSubmitFormState {
 export interface ICommentSubmitFormProps {
     onSubmit: any;
 }
-
+/**
+ * Creates form using MaterialUI form elements and validates them using react-material-ui-form-validator
+ * */
 export default class CommentSubmitForm extends React.Component<ICommentSubmitFormProps, ICommentSubmitFormState> {
 
     constructor(props) {
         super(props);
+        /* assign handlers */
         this.handleNameChange = this.handleNameChange.bind(this);
         this.handleEmailChange = this.handleEmailChange.bind(this);
         this.handleBodyChange = this.handleBodyChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        /* setup default state*/
         this.state = {
             name: '',
             email: '',
             body: ''
         };
     }
-
+    /**
+     * Set state's name variable, if validator thinks it is acceptable
+     * */
     handleNameChange(event) {
         const name = event.target.value;
         this.setState({ name: name });
     }
-
+    /**
+     * Set state's email variable, if validator thinks it is acceptable
+     * */
     handleEmailChange(event) {
         const email = event.target.value;
         this.setState({ email: email });
     }
-
+    /**
+     * Set state's body variable, if validator thinks it is acceptable
+     * */
     handleBodyChange(event) {
         const body = event.target.value;
         this.setState({ body: body });
     }
-
+    /**
+     * Pass information from form to onSubmit function given in props
+     * */
     handleSubmit() {
         this.props.onSubmit({
             name: this.state.name,

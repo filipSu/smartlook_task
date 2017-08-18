@@ -13,15 +13,21 @@ export interface IPostsListItemProps {
     userId: number;
     history?: any;
 }
-
+/**
+ * Creates MaterialUI ListItem with post information
+ * */
 export default class PostsListItem extends React.Component<IPostsListItemProps, IPostsListItemState> {
 
     constructor(props) {
         super(props);
+        /* assign handler */
         this.handleClick = this.handleClick.bind(this);
+        /* set default state*/
         this.state = {userName: ''};
     }
-
+    /**
+     * Gets user info from server before component mounts and saves them to state.
+     * */
     componentWillMount() {
         UsersAPI.getByID(this.props.userId)
             .then((data) => {
@@ -31,11 +37,15 @@ export default class PostsListItem extends React.Component<IPostsListItemProps, 
                 console.error(error);
             });
     }
-
+    /**
+     * Capitalizes first letter of given string
+     * */
     private static capitalizeFirstLetter(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
-
+    /**
+     * Redirects to appropriate post route on list item click
+     * */
     handleClick() {
         this.props.history.push('/post/'+this.props.id);
     }

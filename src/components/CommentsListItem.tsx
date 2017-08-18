@@ -8,7 +8,9 @@ export interface ICommentsListItemProps {
     email: string;
     body: string;
 }
-
+/**
+ * Creates MaterialUI ListItem with comment information
+ * */
 export default class CommentsListItem extends React.Component<ICommentsListItemProps, ICommentsListItemState> {
 
     constructor(props) {

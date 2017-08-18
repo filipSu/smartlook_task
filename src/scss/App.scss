@@ -10,7 +10,6 @@ html {
 body {
   min-height: 100%;
   margin: 0;
-  /*@include linearHorizontalGradient($primary_purple, $primary_yellow, 50%, 50%);*/
 }
 
 .full-height {
@@ -25,7 +24,7 @@ body {
   background-attachment: fixed;
   height: 100vh;
 }
-
+/* Main content - dimensions context*/
 main.content-wrapper {
   color: black;
   height: 100vh;
@@ -41,7 +40,7 @@ main.content-wrapper {
     box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
   }
 }
-
+/* Posts panel - dimensions context*/
 div.posts {
   overflow: scroll;
   background: $content_background;
@@ -51,6 +50,7 @@ div.posts {
   height: $posts_height;
 }
 
+/* PostListItem - general */
 div.post-list-item-content {
   display: -webkit-box;
   -webkit-box-clamp: 2;
@@ -76,13 +76,13 @@ div.post-list-item-content {
     }
   }
 }
-
+/* PostDetail - dimensions context */
 div.post-detail {
   padding: 24px 0 0;
   border-radius: 2px;
 
 }
-
+/* PostDetail - general */
 div.post-detail-content {
   padding: 16px 16px 0;
   > p:first-letter {
@@ -95,7 +95,7 @@ div.post-detail-content {
     font-weight: 500;
   }
 }
-
+/* CommentsList - general */
 div.post-comments-wrapper {
   background: $post_comments_background;
   padding: 0 16px;
@@ -115,7 +115,7 @@ div.comments-list-item {
     }
   }
 }
-
+/* UserDetailDialog - general + dimensions context*/
 div.user-dialog-wrapper {
   padding: 8px 16px;
   > div {
@@ -150,7 +150,7 @@ div.user-dialog-wrapper {
   }
 }
 
-//Scrollbar
+/* Scrollbar - workaround */
 ::-webkit-scrollbar {
   width: 6px;
 }
@@ -170,4 +170,4 @@ div.user-dialog-wrapper {
 ::-webkit-scrollbar-thumb:hover {
   background: #969696;
 }
-//END Scrollbar
+/* END Scrollbar */

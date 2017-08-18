@@ -6,15 +6,20 @@ import Divider from "material-ui/Divider";
 
 export interface ICommentsListState {}
 export interface ICommentsListProps {
-    comments: any[];
+    comments: any[]; //comments data
 }
-
+/**
+ * Creates MaterialUI List with comments
+ * */
 export default class CommentsList extends React.Component<ICommentsListProps, ICommentsListState> {
 
     constructor(props) {
         super(props);
     }
-
+    /**
+     * Creates new list item from given comment information
+     * @return CommentsListItem element
+     * */
     getCommentItem(comment: any) {
         return (
             <CommentsListItem
@@ -24,7 +29,11 @@ export default class CommentsList extends React.Component<ICommentsListProps, IC
                 body={comment.body}/>
         );
     }
-
+    /**
+     * Creates MaterialUI Divider if given index is not 0.
+     * Used to separate list items except the last one (0 because
+     * list will be reversed)
+     * */
     private getDivider(current: number) {
         //if given item is first one, return divider element
         // first one because array will be reversed
@@ -38,6 +47,7 @@ export default class CommentsList extends React.Component<ICommentsListProps, IC
     render() {
         let comments = this.props.comments;
         let commentsItems;
+        /* if comments exist, create list items and dividers for them */
         if (comments) {
             commentsItems = comments.map((comment,i) => [
                 this.getCommentItem(comment), //render list item

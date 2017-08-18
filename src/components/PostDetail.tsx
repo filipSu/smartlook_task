@@ -31,24 +31,31 @@ export interface IPostDetailProps {
     history?: any;
     params:any
 }
-
+/**
+ * Creates components representing detailed information about post specified in by ID in route(URL)
+ * */
 export default class PostDetail extends React.Component<IPostDetailProps, IPostDetailState> {
 
     constructor(props) {
         super(props);
+        /* assign handlers*/
         this.handleBack = this.handleBack.bind(this);
         this.handleToggleComments = this.handleToggleComments.bind(this);
         this.handleUserDetailOpen = this.handleUserDetailOpen.bind(this);
         this.handleUserDetailClose = this.handleUserDetailClose.bind(this);
         this.handleCommentSubmit = this.handleCommentSubmit.bind(this);
+        /* set default state */
         this.state = {
-            commentsExpanded: true,
+            commentsExpanded: false,
             isLoadingPost: true,
             id: props.match.params.id,
             userDetailOpened: false
         };
     }
-
+    /**
+     * Gets post info from server before component mounts and saves them to state.
+     * Afterwards gets info about user and post comments
+     * */
     componentWillMount() {
         PostsAPI.getByID(this.state.id)
             .then((data) => {
@@ -62,7 +69,9 @@ export default class PostDetail extends React.Component<IPostDetailProps, IPostD
                 console.error(error);
             });
     }
-
+    /**
+     * Gets user info from server and saves them to state.
+     * */
     private loadUser(userId: number) {
         UsersAPI.getByID(userId)
             .then((data) => {
@@ -72,7 +81,9 @@ export default class PostDetail extends React.Component<IPostDetailProps, IPostD
                 console.error(error);
             });
     }
-
+    /**
+     * Gets comments from server and saves them to state.
+     * */
     private loadComments(postId: number) {
         CommentsAPI.getByPostID(postId)
             .then((data) => {
@@ -85,23 +96,33 @@ export default class PostDetail extends React.Component<IPostDetailProps, IPostD
                 console.error(error);
             });
     }
-
+    /**
+     * Shows/hides comments according to state variable
+     * */
     handleToggleComments() {
         this.setState({commentsExpanded: !this.state.commentsExpanded});
     }
-
+    /**
+     * Redirects to main route
+     * */
     handleBack() {
         this.props.history.push('/');
     }
-
+    /**
+     * Opens UserDetailDialog
+     * */
     handleUserDetailOpen() {
         this.setState({userDetailOpened: true});
     }
-
+    /**
+     * Closes UserDetailDialog
+     * */
     handleUserDetailClose() {
         this.setState({userDetailOpened: false});
     }
-
+    /**
+     * Creates new comment by calling API. If successful, new comment is pushed to other comments
+     * */
     handleCommentSubmit(comment: any) {
         CommentsAPI.postComment(this.state.post.id, comment.name, comment.email, comment.body)
             .then((data) => {
@@ -113,7 +134,9 @@ export default class PostDetail extends React.Component<IPostDetailProps, IPostD
                 console.error(error);
             });
     }
-
+    /**
+     * Capitalizes first letter of given string
+     * */
     private static capitalizeFirstLetter(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
@@ -125,6 +148,7 @@ export default class PostDetail extends React.Component<IPostDetailProps, IPostD
         let userDetailOpened = this.state.userDetailOpened;
 
         let title = 'Loading', body = '';
+        /* if post exist, specify title and body */
         if (post) {
             title = post.title;
             body = post.body;

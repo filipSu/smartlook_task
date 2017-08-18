@@ -23,14 +23,19 @@ const customContentStyle = {
     width: '350px',
     maxWidth: 'none',
 };
-
+/**
+ * Creates MaterialUI Dialog with detailed user information
+ * */
 export default class UserDetailDialog extends React.Component<IUserDetailDialogProps, IUserDetailDialogState> {
 
     constructor(props) {
         super(props);
+        /* assign handler */
         this.handleClose = this.handleClose.bind(this);
     }
-
+    /**
+     * Invokes onClose function given in props
+     * */
     handleClose() {
         this.props.onClose();
     }
