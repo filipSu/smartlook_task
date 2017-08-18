@@ -123,7 +123,8 @@ export default class PostsList extends React.Component<IPostsListProps, IPostsLi
         return (
             <div className="row top-xs posts">
                 {loadingProgressBar}
-                <List className="col-xs-12 row posts-list top-xs">
+                <List className="col-xs-12 posts-list top-xs">
+
                     <Subheader className="col-xs-12">Latest posts</Subheader>
                     {postsItems}
                 </List>
